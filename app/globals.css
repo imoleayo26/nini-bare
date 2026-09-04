@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --nb-white: #ffffff;
+  --nb-blush: #fcf0f2;
+  --nb-pink: #e08c9a;
+  --nb-rose: #c83f67;
+  --nb-berry: #622937;
+  --nb-ink: #211b1d;
+  --nb-gold: #c9a34e;
+  --nb-border: #efd4da;
+
+  --background: var(--nb-white);
+  --foreground: var(--nb-ink);
 }
 
 body {
