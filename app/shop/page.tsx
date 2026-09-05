@@ -1,35 +1,5 @@
 import Header from "@/components/storefront/Header";
-
-const products = [
-  {
-    slug: "essential-set",
-    name: "Essential Set",
-    category: "Women",
-    price: "₦18,000",
-    description: "A simple everyday piece made for comfort.",
-  },
-  {
-    slug: "everyday-essential",
-    name: "Everyday Essential",
-    category: "Men",
-    price: "₦22,000",
-    description: "Clean, comfortable style for everyday living.",
-  },
-  {
-    slug: "soft-lace-set",
-    name: "Soft Lace Set",
-    category: "Lingerie",
-    price: "₦16,000",
-    description: "Elegant intimates with a soft, effortless feel.",
-  },
-  {
-    slug: "classic-lounge-set",
-    name: "Classic Lounge Set",
-    category: "Unisex",
-    price: "₦25,000",
-    description: "Relaxed everyday comfort with a polished finish.",
-  },
-];
+import { catalogRepository, formatMoney } from "@/lib/catalog";
 
 const categoryNames: Record<string, string> = {
   women: "Women",
@@ -49,9 +19,10 @@ export default async function ShopPage({
     ? categoryNames[category.toLowerCase()]
     : undefined;
 
-  const visibleProducts = selectedCategory
-    ? products.filter((product) => product.category === selectedCategory)
-    : products;
+  const visibleProducts = await catalogRepository.listProducts({
+    categorySlug: category?.toLowerCase(),
+    publishedOnly: true,
+  });
 
   const heading = selectedCategory
     ? `${selectedCategory} collection.`
@@ -100,14 +71,14 @@ export default async function ShopPage({
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {visibleProducts.map((product) => (
               <article
-                key={product.slug}
+                key={product.id}
                 className="overflow-hidden rounded-2xl border border-nb-border bg-white"
               >
                 <div className="aspect-[4/5] bg-nb-blush" />
 
                 <div className="p-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-nb-rose">
-                    {product.category}
+                    {product.categorySlugs.join(" / ")}
                   </p>
 
                   <h3 className="mt-2 text-sm font-semibold text-nb-berry">
@@ -115,11 +86,11 @@ export default async function ShopPage({
                   </h3>
 
                   <p className="mt-2 text-xs leading-5 text-nb-ink/60">
-                    {product.description}
+                    {product.shortDescription}
                   </p>
 
                   <p className="mt-4 text-sm font-semibold text-nb-ink">
-                    {product.price}
+                    {formatMoney(product.price)}
                   </p>
 
                   <a
