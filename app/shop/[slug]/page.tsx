@@ -46,9 +46,11 @@ export default async function ProductPage({
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-nb-rose">
             Nini Bare
           </p>
+
           <h1 className="mt-3 text-3xl font-semibold text-nb-berry">
             Piece not found.
           </h1>
+
           <a
             href="/shop"
             className="mt-6 inline-block rounded-full bg-nb-berry px-6 py-3 text-sm font-medium text-white"
@@ -73,15 +75,38 @@ export default async function ProductPage({
 
           <a
             href="/shop"
-            className="rounded-full border border-nb-border px-4 py-2 text-sm hover:bg-nb-blush"
+            className="rounded-full border border-nb-border px-4 py-2 text-sm transition hover:bg-nb-blush"
           >
             Back to shop
           </a>
         </div>
       </header>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-6 py-10 md:grid-cols-2 md:py-16">
-        <div className="aspect-[4/5] rounded-3xl border border-nb-border bg-nb-blush" />
+      <section className="mx-auto grid max-w-7xl gap-8 px-6 py-10 md:grid-cols-2 md:gap-12 md:py-16">
+        <div>
+          <div className="aspect-[4/5] overflow-hidden rounded-3xl border border-nb-border bg-nb-blush">
+            <div className="flex h-full items-center justify-center px-8 text-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-rose">
+                  Nini Bare
+                </p>
+
+                <p className="mt-3 text-sm text-nb-ink/50">
+                  Product image
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-4 gap-3">
+            {[1, 2, 3, 4].map((item) => (
+              <div
+                key={item}
+                className="aspect-square rounded-xl border border-nb-border bg-nb-blush"
+              />
+            ))}
+          </div>
+        </div>
 
         <div className="flex flex-col justify-center">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-nb-rose">
@@ -107,7 +132,7 @@ export default async function ProductPage({
               {["S", "M", "L", "XL"].map((size) => (
                 <button
                   key={size}
-                  className="rounded-full border border-nb-border px-5 py-2.5 text-sm hover:border-nb-rose hover:bg-nb-blush"
+                  className="rounded-full border border-nb-border px-5 py-2.5 text-sm transition hover:border-nb-rose hover:bg-nb-blush"
                 >
                   {size}
                 </button>
