@@ -1,23 +1,27 @@
 const products = [
   {
+    slug: "essential-set",
     name: "Essential Set",
     category: "Women",
     price: "₦18,000",
     description: "A simple everyday piece made for comfort.",
   },
   {
+    slug: "everyday-essential",
     name: "Everyday Essential",
     category: "Men",
     price: "₦22,000",
     description: "Clean, comfortable style for everyday living.",
   },
   {
+    slug: "soft-lace-set",
     name: "Soft Lace Set",
     category: "Lingerie",
     price: "₦16,000",
     description: "Elegant intimates with a soft, effortless feel.",
   },
   {
+    slug: "classic-lounge-set",
     name: "Classic Lounge Set",
     category: "Unisex",
     price: "₦25,000",
@@ -41,17 +45,25 @@ export default function ShopPage() {
             <a href="/shop" className="font-medium text-nb-rose">
               Shop
             </a>
-            <a href="/categories" className="hover:text-nb-rose">
+
+            <a
+              href="/categories"
+              className="hover:text-nb-rose"
+            >
               Categories
             </a>
-            <a href="/our-story" className="hover:text-nb-rose">
+
+            <a
+              href="/our-story"
+              className="hover:text-nb-rose"
+            >
               Our Story
             </a>
           </nav>
 
           <a
             href="/"
-            className="rounded-full border border-nb-border px-4 py-2 text-sm hover:bg-nb-blush"
+            className="rounded-full border border-nb-border px-4 py-2 text-sm transition hover:bg-nb-blush"
           >
             Home
           </a>
@@ -81,6 +93,7 @@ export default function ShopPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-gold">
               Collection
             </p>
+
             <h2 className="mt-2 text-2xl font-semibold text-nb-berry">
               All pieces
             </h2>
@@ -94,7 +107,7 @@ export default function ShopPage() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
             <article
-              key={product.name}
+              key={product.slug}
               className="overflow-hidden rounded-2xl border border-nb-border bg-white"
             >
               <div className="aspect-[4/5] bg-nb-blush" />
@@ -116,9 +129,12 @@ export default function ShopPage() {
                   {product.price}
                 </p>
 
-                <button className="mt-4 w-full rounded-full bg-nb-berry px-4 py-2.5 text-xs font-medium text-white transition hover:bg-nb-rose">
+                <a
+                  href={`/shop/${product.slug}`}
+                  className="mt-4 block w-full rounded-full bg-nb-berry px-4 py-2.5 text-center text-xs font-medium text-white transition hover:bg-nb-rose"
+                >
                   View piece
-                </button>
+                </a>
               </div>
             </article>
           ))}
