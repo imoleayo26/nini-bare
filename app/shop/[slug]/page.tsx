@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useState } from "react";
+import Header from "@/components/storefront/Header";
 
 const products = {
   "essential-set": {
@@ -50,22 +51,26 @@ export default function ProductPage({
 
   if (!product) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-nb-white px-6 text-center text-nb-ink">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-nb-rose">
-            Nini Bare
-          </p>
+      <main className="min-h-screen bg-nb-white text-nb-ink">
+        <Header />
 
-          <h1 className="mt-3 text-3xl font-semibold text-nb-berry">
-            Piece not found.
-          </h1>
+        <div className="flex min-h-[70vh] items-center justify-center px-6 text-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-nb-rose">
+              Nini Bare
+            </p>
 
-          <a
-            href="/shop"
-            className="mt-6 inline-block rounded-full bg-nb-berry px-6 py-3 text-sm font-medium text-white"
-          >
-            Back to shop
-          </a>
+            <h1 className="mt-3 text-3xl font-semibold text-nb-berry">
+              Piece not found.
+            </h1>
+
+            <a
+              href="/shop"
+              className="mt-6 inline-block rounded-full bg-nb-berry px-6 py-3 text-sm font-medium text-white transition hover:bg-nb-rose"
+            >
+              Back to shop
+            </a>
+          </div>
         </div>
       </main>
     );
@@ -73,23 +78,7 @@ export default function ProductPage({
 
   return (
     <main className="min-h-screen bg-nb-white text-nb-ink">
-      <header className="border-b border-nb-border bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <a
-            href="/"
-            className="text-lg font-semibold tracking-[0.18em] text-nb-berry"
-          >
-            NINI BARE
-          </a>
-
-          <a
-            href="/shop"
-            className="rounded-full border border-nb-border px-4 py-2 text-sm transition hover:bg-nb-blush"
-          >
-            Back to shop
-          </a>
-        </div>
-      </header>
+      <Header />
 
       <section className="mx-auto grid max-w-7xl gap-8 px-6 py-10 md:grid-cols-2 md:gap-12 md:py-16">
         <div>
