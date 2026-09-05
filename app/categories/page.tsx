@@ -1,3 +1,5 @@
+import Header from "@/components/storefront/Header";
+
 const categories = [
   {
     slug: "women",
@@ -28,23 +30,7 @@ const categories = [
 export default function CategoriesPage() {
   return (
     <main className="min-h-screen bg-nb-white text-nb-ink">
-      <header className="border-b border-nb-border bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <a
-            href="/"
-            className="text-lg font-semibold tracking-[0.18em] text-nb-berry"
-          >
-            NINI BARE
-          </a>
-
-          <a
-            href="/shop"
-            className="rounded-full border border-nb-border px-4 py-2 text-sm transition hover:bg-nb-blush"
-          >
-            Shop
-          </a>
-        </div>
-      </header>
+      <Header />
 
       <section className="bg-nb-blush px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl">

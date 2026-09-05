@@ -1,3 +1,5 @@
+import Header from "@/components/storefront/Header";
+
 const products = [
   {
     slug: "essential-set",
@@ -57,46 +59,7 @@ export default async function ShopPage({
 
   return (
     <main className="min-h-screen bg-nb-white text-nb-ink">
-      <header className="border-b border-nb-border bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <a
-            href="/"
-            className="text-lg font-semibold tracking-[0.18em] text-nb-berry"
-          >
-            NINI BARE
-          </a>
-
-          <nav className="hidden gap-6 text-sm text-nb-ink sm:flex">
-            <a
-              href="/shop"
-              className="font-medium text-nb-rose"
-            >
-              Shop
-            </a>
-
-            <a
-              href="/categories"
-              className="hover:text-nb-rose"
-            >
-              Categories
-            </a>
-
-            <a
-              href="/our-story"
-              className="hover:text-nb-rose"
-            >
-              Our Story
-            </a>
-          </nav>
-
-          <a
-            href="/"
-            className="rounded-full border border-nb-border px-4 py-2 text-sm transition hover:bg-nb-blush"
-          >
-            Home
-          </a>
-        </div>
-      </header>
+      <Header />
 
       <section className="bg-nb-blush px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl">
