@@ -1,80 +1,31 @@
-"use client";
-
-import { use, useState } from "react";
+import { notFound } from "next/navigation";
 import Header from "@/components/storefront/Header";
+import { catalogRepository, formatMoney } from "@/lib/catalog";
+import ProductOptions from "@/components/storefront/ProductOptions";
 
-const products = {
-  "essential-set": {
-    name: "Essential Set",
-    category: "Women",
-    price: "₦18,000",
-    description:
-      "A simple everyday piece made for comfort, confidence, and effortless style.",
-  },
-  "everyday-essential": {
-    name: "Everyday Essential",
-    category: "Men",
-    price: "₦22,000",
-    description:
-      "Clean, comfortable style designed for everyday living.",
-  },
-  "soft-lace-set": {
-    name: "Soft Lace Set",
-    category: "Lingerie",
-    price: "₦16,000",
-    description:
-      "Elegant intimates with a soft, effortless feel.",
-  },
-  "classic-lounge-set": {
-    name: "Classic Lounge Set",
-    category: "Unisex",
-    price: "₦25,000",
-    description:
-      "Relaxed everyday comfort with a polished finish.",
-  },
+const categoryNames: Record<string, string> = {
+  women: "Women",
+  men: "Men",
+  lingerie: "Lingerie",
+  unisex: "Unisex",
 };
 
-type ProductSlug = keyof typeof products;
-
-const sizes = ["S", "M", "L", "XL"] as const;
-type Size = (typeof sizes)[number];
-
-export default function ProductPage({
+export default async function ProductPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = use(params);
-  const product = products[slug as ProductSlug];
+  const { slug } = await params;
+  const product = await catalogRepository.getProductBySlug(slug);
 
-  const [selectedSize, setSelectedSize] = useState<Size | null>(null);
-
-  if (!product) {
-    return (
-      <main className="min-h-screen bg-nb-white text-nb-ink">
-        <Header />
-
-        <div className="flex min-h-[70vh] items-center justify-center px-6 text-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-nb-rose">
-              Nini Bare
-            </p>
-
-            <h1 className="mt-3 text-3xl font-semibold text-nb-berry">
-              Piece not found.
-            </h1>
-
-            <a
-              href="/shop"
-              className="mt-6 inline-block rounded-full bg-nb-berry px-6 py-3 text-sm font-medium text-white transition hover:bg-nb-rose"
-            >
-              Back to shop
-            </a>
-          </div>
-        </div>
-      </main>
-    );
+  if (!product || product.status !== "active") {
+    notFound();
   }
+
+  const category =
+    product.categorySlugs
+      .map((categorySlug) => categoryNames[categorySlug] ?? categorySlug)
+      .join(" / ");
 
   return (
     <main className="min-h-screen bg-nb-white text-nb-ink">
@@ -97,7 +48,7 @@ export default function ProductPage({
           </div>
 
           <div className="mt-4 grid grid-cols-4 gap-3">
-            {sizes.map((_, index) => (
+            {Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
                 className="aspect-square rounded-xl border border-nb-border bg-nb-blush"
@@ -108,7 +59,7 @@ export default function ProductPage({
 
         <div className="flex flex-col justify-center">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-nb-rose">
-            {product.category}
+            {category}
           </p>
 
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-nb-berry sm:text-5xl">
@@ -116,55 +67,14 @@ export default function ProductPage({
           </h1>
 
           <p className="mt-5 text-2xl font-semibold text-nb-ink">
-            {product.price}
+            {formatMoney(product.price)}
           </p>
 
           <p className="mt-6 max-w-xl text-base leading-7 text-nb-ink/70">
             {product.description}
           </p>
 
-          <div className="mt-8 border-t border-nb-border pt-6">
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-sm font-semibold text-nb-berry">
-                Size
-              </p>
-
-              {selectedSize && (
-                <p className="text-xs font-medium text-nb-rose">
-                  Selected: {selectedSize}
-                </p>
-              )}
-            </div>
-
-            <div className="mt-3 flex flex-wrap gap-2">
-              {sizes.map((size) => {
-                const isSelected = selectedSize === size;
-
-                return (
-                  <button
-                    key={size}
-                    type="button"
-                    onClick={() => setSelectedSize(size)}
-                    aria-pressed={isSelected}
-                    className={`rounded-full border px-5 py-2.5 text-sm transition ${
-                      isSelected
-                        ? "border-nb-berry bg-nb-berry text-white"
-                        : "border-nb-border bg-white text-nb-ink hover:border-nb-rose hover:bg-nb-blush"
-                    }`}
-                  >
-                    {size}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className="mt-8 w-full rounded-full bg-nb-berry px-6 py-4 text-sm font-semibold text-white transition hover:bg-nb-rose sm:w-auto"
-          >
-            Add to cart
-          </button>
+          <ProductOptions variants={product.variants} />
         </div>
       </section>
     </main>
