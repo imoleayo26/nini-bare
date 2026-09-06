@@ -157,45 +157,61 @@ export default async function Home() {
           </div>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
-              <a
-                key={product.id}
-                href={`/shop/${product.slug}`}
-                className="group overflow-hidden rounded-3xl border border-nb-border bg-white transition hover:-translate-y-1 hover:shadow-sm"
-              >
-                <div className="aspect-[4/5] bg-nb-blush">
-                  <div className="flex h-full items-center justify-center px-6 text-center">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-rose">
-                        Nini Bare
-                      </p>
+            {featuredProducts.map((product) => {
+              const primaryImage = [...product.images].sort(
+                (a, b) => a.sortOrder - b.sortOrder,
+              )[0];
 
-                      <p className="mt-3 text-sm text-nb-ink/50">
-                        Product image
-                      </p>
-                    </div>
+              return (
+                <a
+                  key={product.id}
+                  href={`/shop/${product.slug}`}
+                  className="group overflow-hidden rounded-3xl border border-nb-border bg-white transition hover:-translate-y-1 hover:shadow-sm"
+                >
+                  <div className="aspect-[4/5] overflow-hidden bg-nb-blush">
+                    {primaryImage ? (
+                      <img
+                        src={primaryImage.url}
+                        alt={primaryImage.alt}
+                        width={primaryImage.width}
+                        height={primaryImage.height}
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center px-6 text-center">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-rose">
+                            Nini Bare
+                          </p>
+
+                          <p className="mt-3 text-sm text-nb-ink/50">
+                            Product image
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
 
-                <div className="p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-rose">
-                    {product.categorySlugs[0]}
-                  </p>
+                  <div className="p-5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-rose">
+                      {product.categorySlugs[0]}
+                    </p>
 
-                  <h3 className="mt-2 text-lg font-semibold text-nb-berry">
-                    {product.name}
-                  </h3>
+                    <h3 className="mt-2 text-lg font-semibold text-nb-berry">
+                      {product.name}
+                    </h3>
 
-                  <p className="mt-3 text-base font-semibold text-nb-ink">
-                    {formatMoney(product.price)}
-                  </p>
+                    <p className="mt-3 text-base font-semibold text-nb-ink">
+                      {formatMoney(product.price)}
+                    </p>
 
-                  <p className="mt-5 text-sm font-semibold text-nb-rose transition group-hover:text-nb-berry">
-                    View product →
-                  </p>
-                </div>
-              </a>
-            ))}
+                    <p className="mt-5 text-sm font-semibold text-nb-rose transition group-hover:text-nb-berry">
+                      View product →
+                    </p>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -35,6 +35,113 @@ export const categories: Category[] = [
   },
 ];
 
+const placeholderImages = {
+  essential: [
+    {
+      id: "img-essential-1",
+      url: "https://placehold.co/800x1000/fcf0f2/622937?text=Essential+Set",
+      alt: "Nini Bare Essential Set",
+      width: 800,
+      height: 1000,
+      sortOrder: 1,
+    },
+    {
+      id: "img-essential-2",
+      url: "https://placehold.co/800x1000/e08c9a/ffffff?text=Essential+Set",
+      alt: "Nini Bare Essential Set alternate view",
+      width: 800,
+      height: 1000,
+      sortOrder: 2,
+    },
+    {
+      id: "img-essential-3",
+      url: "https://placehold.co/800x1000/c83f67/ffffff?text=Essential+Set",
+      alt: "Nini Bare Essential Set detail view",
+      width: 800,
+      height: 1000,
+      sortOrder: 3,
+    },
+  ],
+  everyday: [
+    {
+      id: "img-everyday-1",
+      url: "https://placehold.co/800x1000/fcf0f2/622937?text=Everyday+Essential",
+      alt: "Nini Bare Everyday Essential",
+      width: 800,
+      height: 1000,
+      sortOrder: 1,
+    },
+    {
+      id: "img-everyday-2",
+      url: "https://placehold.co/800x1000/e08c9a/ffffff?text=Everyday+Essential",
+      alt: "Nini Bare Everyday Essential alternate view",
+      width: 800,
+      height: 1000,
+      sortOrder: 2,
+    },
+    {
+      id: "img-everyday-3",
+      url: "https://placehold.co/800x1000/c83f67/ffffff?text=Everyday+Essential",
+      alt: "Nini Bare Everyday Essential detail view",
+      width: 800,
+      height: 1000,
+      sortOrder: 3,
+    },
+  ],
+  lace: [
+    {
+      id: "img-lace-1",
+      url: "https://placehold.co/800x1000/fcf0f2/622937?text=Soft+Lace+Set",
+      alt: "Nini Bare Soft Lace Set",
+      width: 800,
+      height: 1000,
+      sortOrder: 1,
+    },
+    {
+      id: "img-lace-2",
+      url: "https://placehold.co/800x1000/e08c9a/ffffff?text=Soft+Lace+Set",
+      alt: "Nini Bare Soft Lace Set alternate view",
+      width: 800,
+      height: 1000,
+      sortOrder: 2,
+    },
+    {
+      id: "img-lace-3",
+      url: "https://placehold.co/800x1000/c83f67/ffffff?text=Soft+Lace+Set",
+      alt: "Nini Bare Soft Lace Set detail view",
+      width: 800,
+      height: 1000,
+      sortOrder: 3,
+    },
+  ],
+  lounge: [
+    {
+      id: "img-lounge-1",
+      url: "https://placehold.co/800x1000/fcf0f2/622937?text=Classic+Lounge+Set",
+      alt: "Nini Bare Classic Lounge Set",
+      width: 800,
+      height: 1000,
+      sortOrder: 1,
+    },
+    {
+      id: "img-lounge-2",
+      url: "https://placehold.co/800x1000/e08c9a/ffffff?text=Classic+Lounge+Set",
+      alt: "Nini Bare Classic Lounge Set alternate view",
+      width: 800,
+      height: 1000,
+      sortOrder: 2,
+    },
+    {
+      id: "img-lounge-3",
+      url: "https://placehold.co/800x1000/c83f67/ffffff?text=Classic+Lounge+Set",
+      alt: "Nini Bare Classic Lounge Set detail view",
+      width: 800,
+      height: 1000,
+      sortOrder: 3,
+    },
+  ],
+};
+
 export const products: Product[] = [
   {
     id: "prod-essential-set",
@@ -51,7 +158,7 @@ export const products: Product[] = [
       amount: 1800000,
       currency: "NGN",
     },
-    images: [],
+    images: placeholderImages.essential,
     variants: [
       {
         id: "var-essential-s",
@@ -88,8 +195,7 @@ export const products: Product[] = [
     slug: "everyday-essential",
     name: "Everyday Essential",
     shortDescription: "Clean, comfortable style for everyday living.",
-    description:
-      "Clean, comfortable style designed for everyday living.",
+    description: "Clean, comfortable style designed for everyday living.",
     categorySlugs: ["men"],
     status: "active",
     publishedAt: "2026-09-01T00:00:00.000Z",
@@ -98,7 +204,7 @@ export const products: Product[] = [
       amount: 2200000,
       currency: "NGN",
     },
-    images: [],
+    images: placeholderImages.everyday,
     variants: [
       {
         id: "var-everyday-s",
@@ -145,7 +251,7 @@ export const products: Product[] = [
       amount: 1600000,
       currency: "NGN",
     },
-    images: [],
+    images: placeholderImages.lace,
     variants: [
       {
         id: "var-lace-s",
@@ -182,8 +288,7 @@ export const products: Product[] = [
     slug: "classic-lounge-set",
     name: "Classic Lounge Set",
     shortDescription: "Relaxed everyday comfort with a polished finish.",
-    description:
-      "Relaxed everyday comfort with a polished finish.",
+    description: "Relaxed everyday comfort with a polished finish.",
     categorySlugs: ["unisex"],
     status: "active",
     publishedAt: "2026-09-01T00:00:00.000Z",
@@ -192,7 +297,7 @@ export const products: Product[] = [
       amount: 2500000,
       currency: "NGN",
     },
-    images: [],
+    images: placeholderImages.lounge,
     variants: [
       {
         id: "var-lounge-s",

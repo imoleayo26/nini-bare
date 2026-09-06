@@ -69,39 +69,67 @@ export default async function ShopPage({
 
         {visibleProducts.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {visibleProducts.map((product) => (
-              <article
-                key={product.id}
-                className="overflow-hidden rounded-2xl border border-nb-border bg-white"
-              >
-                <div className="aspect-[4/5] bg-nb-blush" />
+            {visibleProducts.map((product) => {
+              const primaryImage = [...product.images].sort(
+                (a, b) => a.sortOrder - b.sortOrder,
+              )[0];
 
-                <div className="p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-nb-rose">
-                    {product.categorySlugs.join(" / ")}
-                  </p>
+              return (
+                <article
+                  key={product.id}
+                  className="group overflow-hidden rounded-2xl border border-nb-border bg-white"
+                >
+                  <div className="aspect-[4/5] overflow-hidden bg-nb-blush">
+                    {primaryImage ? (
+                      <img
+                        src={primaryImage.url}
+                        alt={primaryImage.alt}
+                        width={primaryImage.width}
+                        height={primaryImage.height}
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center px-6 text-center">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-nb-rose">
+                            Nini Bare
+                          </p>
 
-                  <h3 className="mt-2 text-sm font-semibold text-nb-berry">
-                    {product.name}
-                  </h3>
+                          <p className="mt-2 text-sm text-nb-ink/50">
+                            Product image
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
-                  <p className="mt-2 text-xs leading-5 text-nb-ink/60">
-                    {product.shortDescription}
-                  </p>
+                  <div className="p-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-nb-rose">
+                      {product.categorySlugs.join(" / ")}
+                    </p>
 
-                  <p className="mt-4 text-sm font-semibold text-nb-ink">
-                    {formatMoney(product.price)}
-                  </p>
+                    <h3 className="mt-2 text-sm font-semibold text-nb-berry">
+                      {product.name}
+                    </h3>
 
-                  <a
-                    href={`/shop/${product.slug}`}
-                    className="mt-4 block w-full rounded-full bg-nb-berry px-4 py-2.5 text-center text-xs font-medium text-white transition hover:bg-nb-rose"
-                  >
-                    View piece
-                  </a>
-                </div>
-              </article>
-            ))}
+                    <p className="mt-2 text-xs leading-5 text-nb-ink/60">
+                      {product.shortDescription}
+                    </p>
+
+                    <p className="mt-4 text-sm font-semibold text-nb-ink">
+                      {formatMoney(product.price)}
+                    </p>
+
+                    <a
+                      href={`/shop/${product.slug}`}
+                      className="mt-4 block w-full rounded-full bg-nb-berry px-4 py-2.5 text-center text-xs font-medium text-white transition hover:bg-nb-rose"
+                    >
+                      View piece
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="rounded-3xl border border-nb-border bg-nb-blush px-6 py-16 text-center">
