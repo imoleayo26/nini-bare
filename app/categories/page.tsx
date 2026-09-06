@@ -1,33 +1,9 @@
 import Header from "@/components/storefront/Header";
+import { catalogRepository } from "@/lib/catalog";
 
-const categories = [
-  {
-    slug: "women",
-    name: "Women",
-    description:
-      "Modern pieces designed for comfort, confidence, and everyday expression.",
-  },
-  {
-    slug: "men",
-    name: "Men",
-    description:
-      "Clean everyday essentials with an effortless, comfortable feel.",
-  },
-  {
-    slug: "lingerie",
-    name: "Lingerie",
-    description:
-      "Elegant intimates designed to feel soft, personal, and beautiful.",
-  },
-  {
-    slug: "unisex",
-    name: "Unisex",
-    description:
-      "Relaxed styles made to move naturally across wardrobes and personal style.",
-  },
-];
+export default async function CategoriesPage() {
+  const categories = await catalogRepository.listCategories();
 
-export default function CategoriesPage() {
   return (
     <main className="min-h-screen bg-nb-white text-nb-ink">
       <Header />
@@ -63,7 +39,7 @@ export default function CategoriesPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category) => (
             <a
-              key={category.slug}
+              key={category.id}
               href={`/shop?category=${category.slug}`}
               className="group overflow-hidden rounded-3xl border border-nb-border bg-white transition hover:-translate-y-1 hover:shadow-sm"
             >
