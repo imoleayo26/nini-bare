@@ -54,7 +54,7 @@ export default async function ProductPage({
             {product.description}
           </p>
 
-          <ProductOptions variants={product.variants} />
+          <ProductOptions product={product} />
         </div>
       </section>
     </main>

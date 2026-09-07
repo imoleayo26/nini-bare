@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/components/cart/CartProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -17,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }

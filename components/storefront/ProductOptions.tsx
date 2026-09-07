@@ -1,18 +1,65 @@
 "use client";
 
 import { useState } from "react";
-import type { ProductVariant } from "@/lib/catalog";
+import type { Product } from "@/lib/catalog";
+import { createCartItemId } from "@/lib/cart";
+import { useCart } from "@/components/cart/CartProvider";
 
 interface ProductOptionsProps {
-  variants: ProductVariant[];
+  product: Product;
 }
 
 export default function ProductOptions({
-  variants,
+  product,
 }: ProductOptionsProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [added, setAdded] = useState(false);
 
-  const sizes = variants.filter((variant) => variant.size);
+  const { addItem } = useCart();
+
+  const sizes = product.variants.filter(
+    (variant) => variant.size,
+  );
+
+  const selectedVariant = product.variants.find(
+    (variant) => variant.size?.value === selectedSize,
+  );
+
+  function handleAddToCart() {
+    if (!selectedVariant || !selectedSize) {
+      return;
+    }
+
+    const primaryImage = product.images
+      .slice()
+      .sort((a, b) => a.sortOrder - b.sortOrder)[0];
+
+    addItem({
+      id: createCartItemId(
+        product.id,
+        selectedVariant.id,
+      ),
+      productId: product.id,
+      productSlug: product.slug,
+      productName: product.name,
+      variantId: selectedVariant.id,
+      sku: selectedVariant.sku,
+      size: selectedVariant.size?.label,
+      color: selectedVariant.color?.label,
+      unitPrice:
+        selectedVariant.price?.amount ?? product.price.amount,
+      currency: "NGN",
+      imageUrl: primaryImage?.url,
+      imageAlt: primaryImage?.alt,
+      quantity: 1,
+    });
+
+    setAdded(true);
+
+    window.setTimeout(() => {
+      setAdded(false);
+    }, 2000);
+  }
 
   return (
     <>
@@ -33,7 +80,9 @@ export default function ProductOptions({
           {sizes.map((variant) => {
             const size = variant.size!.value;
             const isSelected = selectedSize === size;
-            const isAvailable = variant.availability === "in_stock";
+            const isAvailable =
+              variant.availability === "in_stock" &&
+              (variant.stockQuantity ?? 0) > 0;
 
             return (
               <button
@@ -42,6 +91,7 @@ export default function ProductOptions({
                 onClick={() => {
                   if (isAvailable) {
                     setSelectedSize(size);
+                    setAdded(false);
                   }
                 }}
                 disabled={!isAvailable}
@@ -63,14 +113,15 @@ export default function ProductOptions({
 
       <button
         type="button"
-        disabled={!selectedSize}
+        disabled={!selectedVariant}
+        onClick={handleAddToCart}
         className={`mt-8 w-full rounded-full px-6 py-4 text-sm font-semibold transition sm:w-auto ${
-          selectedSize
+          selectedVariant
             ? "bg-nb-berry text-white hover:bg-nb-rose"
             : "cursor-not-allowed bg-nb-blush text-nb-ink/40"
         }`}
       >
-        Add to cart
+        {added ? "Added to bag ✓" : "Add to cart"}
       </button>
     </>
   );
