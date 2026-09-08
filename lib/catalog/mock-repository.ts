@@ -40,4 +40,10 @@ export class MockCatalogRepository implements CatalogRepository {
 
     return product ?? null;
   }
+
+  async getProductById(productId: string): Promise<Product | null> {
+    const product = products.find((item) => item.id === productId);
+
+    return product ?? null;
+  }
 }

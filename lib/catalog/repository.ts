@@ -11,4 +11,5 @@ export interface CatalogRepository {
   getCategoryBySlug(slug: string): Promise<Category | null>;
   listProducts(query?: ProductListQuery): Promise<Product[]>;
   getProductBySlug(slug: string): Promise<Product | null>;
+  getProductById(productId: string): Promise<Product | null>;
 }
