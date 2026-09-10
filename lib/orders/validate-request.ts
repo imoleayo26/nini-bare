@@ -1,4 +1,5 @@
 import type { CatalogRepository, Product } from "@/lib/catalog";
+import type { InventoryRepository } from "@/lib/inventory/repository";
 import type { OrderItem } from "./types";
 import type { OrderRequest } from "./request";
 
@@ -13,6 +14,7 @@ export interface ValidatedOrderRequest {
 export async function validateOrderRequest(
   request: OrderRequest,
   catalog: CatalogRepository,
+  inventory: InventoryRepository,
 ): Promise<ValidatedOrderRequest> {
   if (!request.items.length) {
     throw new Error("Your cart is empty.");
@@ -44,20 +46,19 @@ export async function validateOrderRequest(
       throw new Error("One or more selected variants are invalid.");
     }
 
-    const isAvailable =
-      variant.availability === "in_stock" &&
-      (variant.stockQuantity ?? 0) > 0;
+    const availableQuantity =
+      await inventory.getAvailableQuantity(variant.id);
 
-    if (!isAvailable) {
+    if (
+      variant.availability !== "in_stock" ||
+      availableQuantity <= 0
+    ) {
       throw new Error(
         `${product.name} is currently out of stock.`,
       );
     }
 
-    if (
-      requestedItem.quantity >
-      (variant.stockQuantity ?? 0)
-    ) {
+    if (requestedItem.quantity > availableQuantity) {
       throw new Error(
         `${product.name} does not have enough stock available.`,
       );

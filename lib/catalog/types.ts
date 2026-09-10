@@ -41,7 +41,6 @@ export interface ProductVariant {
   price?: Money;
   compareAtPrice?: Money;
   availability: Availability;
-  stockQuantity?: number;
 }
 
 export interface Product {

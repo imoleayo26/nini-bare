@@ -1,7 +1,8 @@
 import Header from "@/components/storefront/Header";
-import { catalogRepository } from "@/lib/catalog";
+import { getCatalogRepository } from "@/lib/catalog/server";
 
 export default async function CategoriesPage() {
+  const catalogRepository = await getCatalogRepository();
   const categories = await catalogRepository.listCategories();
 
   return (

@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import Header from "@/components/storefront/Header";
 import ProductGallery from "@/components/storefront/ProductGallery";
 import ProductOptions from "@/components/storefront/ProductOptions";
-import { catalogRepository, formatMoney } from "@/lib/catalog";
+import { formatMoney } from "@/lib/catalog";
+import { getCatalogRepository } from "@/lib/catalog/server";
 
 const categoryNames: Record<string, string> = {
   women: "Women",
@@ -17,6 +18,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const catalogRepository = await getCatalogRepository();
   const product = await catalogRepository.getProductBySlug(slug);
 
   if (!product || product.status !== "active") {

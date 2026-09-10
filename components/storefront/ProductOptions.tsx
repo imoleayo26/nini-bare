@@ -81,8 +81,7 @@ export default function ProductOptions({
             const size = variant.size!.value;
             const isSelected = selectedSize === size;
             const isAvailable =
-              variant.availability === "in_stock" &&
-              (variant.stockQuantity ?? 0) > 0;
+              variant.availability === "in_stock";
 
             return (
               <button

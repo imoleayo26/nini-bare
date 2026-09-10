@@ -1,7 +1,10 @@
 import Header from "@/components/storefront/Header";
-import { catalogRepository, formatMoney } from "@/lib/catalog";
+import { formatMoney } from "@/lib/catalog";
+import { getCatalogRepository } from "@/lib/catalog/server";
 
 export default async function Home() {
+  const catalogRepository = await getCatalogRepository();
+
   const [categories, featuredProducts] = await Promise.all([
     catalogRepository.listCategories(),
     catalogRepository.listProducts({

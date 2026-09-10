@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { catalogRepository } from "@/lib/catalog";
+import { MockInventoryRepository } from "@/lib/inventory/mock-repository";
 import type { OrderRequest } from "@/lib/orders/request";
 import { validateOrderRequest } from "@/lib/orders/validate-request";
+
+const inventoryRepository = new MockInventoryRepository();
 
 export async function POST(request: Request) {
   try {
@@ -10,6 +13,7 @@ export async function POST(request: Request) {
     const validatedOrder = await validateOrderRequest(
       body,
       catalogRepository,
+      inventoryRepository,
     );
 
     return NextResponse.json({

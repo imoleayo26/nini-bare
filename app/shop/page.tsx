@@ -1,5 +1,6 @@
 import Header from "@/components/storefront/Header";
-import { catalogRepository, formatMoney } from "@/lib/catalog";
+import { formatMoney } from "@/lib/catalog";
+import { getCatalogRepository } from "@/lib/catalog/server";
 
 const categoryNames: Record<string, string> = {
   women: "Women",
@@ -18,6 +19,8 @@ export default async function ShopPage({
   const selectedCategory = category
     ? categoryNames[category.toLowerCase()]
     : undefined;
+
+  const catalogRepository = await getCatalogRepository();
 
   const visibleProducts = await catalogRepository.listProducts({
     categorySlug: category?.toLowerCase(),
